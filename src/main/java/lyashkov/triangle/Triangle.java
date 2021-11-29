@@ -1,11 +1,7 @@
 package lyashkov.triangle;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class Triangle {
 
@@ -16,6 +12,11 @@ public class Triangle {
 
 
     public Triangle(double sideA, double sideB, double sideC, double injectionAB) {
+        /*if (){
+
+        } else {
+            throw new RuntimeException(" не  верно");
+        }*/
         this.sideA = sideA;
         this.sideB = sideB;
         this.sideC = sideC;
@@ -26,14 +27,31 @@ public class Triangle {
 
 
     public double getAreaOfInjection() {
-        double radians = Math.toRadians(injectionAB);
-        double area = (sideA * sideB * radians) / 2;
-        return area;
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(true,sideA >= 1,"Не соответствует условиям A"),
+                () -> Assertions.assertEquals(true,sideB >= 1,"Не соответствует условиям B"),
+                () -> Assertions.assertEquals(true,injectionAB >= 1,"Не соответствует условиям поиска по углу"),
+                () -> Assertions.assertEquals(true, injectionAB < 178, "Сумма углов треугольника не может превышать 180 градусов")
+        );
+            double radians = Math.toRadians(injectionAB);
+            return (sideA * sideB * radians) / 2;
     }
 
-    public double getAreaOfGeron() {
+    public double getAreaOfHeron() {
+        double sumOfAB = sideA + sideB;
+        double sumOfAC = sideA + sideC;
+        double sumOfBC = sideB + sideC;
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(true,sideA >=1,"Сторона A не может равняться нулю"),
+                () -> Assertions.assertEquals(true,sideB >=1,"Сторона B не может равняться нулю"),
+                () -> Assertions.assertEquals(true,sideC >=1,"Сторона C не может равняться нулю"),
+                () -> Assertions.assertEquals(true, sumOfAB > sideC, "Сумма сторон AB превышает длинну третьей стороны"),
+                () -> Assertions.assertEquals(true, sumOfAC > sideB, "Сумма сторон AC превышает длинну третьей стороны"),
+                () -> Assertions.assertEquals(true, sumOfBC > sideA, "Сумма сторон BC превышает длинну третьей стороны")
+        );
         double semiperiod = (sideA + sideB + sideC) / 2;
-        double area = (Math.sqrt(semiperiod * (semiperiod - sideA) * (semiperiod - sideB) * (semiperiod - sideC)));
-        return area;
+        return (Math.sqrt(semiperiod * (semiperiod - sideA) * (semiperiod - sideB) * (semiperiod - sideC)));
     }
+
+
 }

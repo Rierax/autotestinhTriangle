@@ -11,5 +11,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Tag("Smoke")
 @Tag("Functional")
+@Tag("AfterAll")
 public @interface Smoke {
 }

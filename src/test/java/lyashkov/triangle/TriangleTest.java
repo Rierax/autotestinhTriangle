@@ -1,15 +1,13 @@
 package lyashkov.triangle;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class TriangleTest {
 
-    Triangle foreTest = new Triangle(5,10,10,60);
+    Triangle foreTest = new Triangle(10,10,10,60);
 
     @Test
     void testForNotNull() {
@@ -22,7 +20,7 @@ class TriangleTest {
     }
 
     @Test
-    public void testOfSideS() {
+    public void testOfSide() {
         Assertions.assertAll(
                 () -> assertTrue(foreTest.sideA >= 1),
                 () -> assertTrue(foreTest.sideB >= 1),
@@ -31,7 +29,7 @@ class TriangleTest {
     }
 
     @Test
-    public void testOfInjectionS() {
+    public void testOfInjection() {
         Assertions.assertAll(
                 () -> assertTrue(foreTest.injectionAB >= 1),
                 () -> assertTrue(foreTest.injectionAB <178));
@@ -39,7 +37,7 @@ class TriangleTest {
     }
 
     @Test
-    public void getTestOfNotException() {
+    public void testSumOfSide() {
         double sumOfAB = foreTest.sideA + foreTest.sideB;
         double sumOfAC = foreTest.sideA + foreTest.sideC;
         double sumOfBC = foreTest.sideB + foreTest.sideC;
@@ -51,18 +49,36 @@ class TriangleTest {
     }
 
     @Test
-    void getAreaOfInjection() {
-        double radians = Math.toRadians(foreTest.injectionAB);
-        double area = (foreTest.sideA * foreTest.sideB * radians) / 2;
-        assertEquals( area, foreTest.getAreaOfInjection(), "Test injection not complete");
+    void testAreaOfInjection() {
+        assertTrue(RealHelper.differentNumber(52.35, foreTest.getAreaOfInjection(),1));
         System.out.println("площадь по углу и двум сторонам определена верно");
     }
 
     @Test
-    void getAreaOfGeron() {
+    void testAreaOfHeron() {
         double semiperiod = (foreTest.sideA + foreTest.sideB + foreTest.sideC)/2;
         double area = (Math.sqrt(semiperiod * (semiperiod - foreTest.sideA) * (semiperiod - foreTest.sideB) * (semiperiod - foreTest.sideC)));
-        assertEquals(area, foreTest.getAreaOfGeron(), "Test not complete");
+        assertEquals(area, foreTest.getAreaOfHeron(), "Test Heron not complete");
         System.out.println("площадь по теореме герона определена верно");
+    }
+
+    @Test
+    public void negativeTestOfSide() {
+     /*   Exception exception = assertThrows(RuntimeException.class, () -> {
+            Integer.parseInt(“1a”);
+        });*/
+        Assertions.assertAll(
+                () -> assertFalse(foreTest.sideA < 1),
+                () -> assertFalse(foreTest.sideB < 1),
+                () -> assertFalse(foreTest.sideC < 1));
+        System.out.println("Негативный - стороны равны нулю");
+    }
+
+    @Test
+    public void negativeTestOfInjection() {
+        Assertions.assertAll(
+                () -> assertFalse(foreTest.injectionAB < 1),
+                () -> assertFalse(foreTest.injectionAB >178));
+        System.out.println("Негативный - сумма сторон треугольника превышает 180 градусов");
     }
 }
