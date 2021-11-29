@@ -1,4 +1,5 @@
 import lyashkov.triangle.Smoke;
+import lyashkov.triangle.Triangle;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -53,6 +54,22 @@ public class TestTriangleIT {
     }
 
     @Test
+    public void getAreaNegative() {
+        Assertions.assertThrows(RuntimeException.class, () ->{
+
+        });
+    }
+}
+
+/* @Test
+    public void getAreaOfInjection() {
+        double radians = Math.toRadians(injectionAB);
+        double area = (sideA * sideB * radians) / 2;
+        assertEquals(52.35987755982988, area, "Test injection not complete");
+        System.out.println("площадь по углу и двум сторонам определена верно");
+    }
+
+    @Test
     public void getAreaOfGeron() {
         double semiperiod = (sideA + sideB + sideC)/2;
         double area = (Math.sqrt(semiperiod * (semiperiod - sideA) * (semiperiod - sideB) * (semiperiod - sideC)));
@@ -60,11 +77,4 @@ public class TestTriangleIT {
         System.out.println("площадь по теореме герона определена верно");
     }
 
-    @Test
-    public void getAreaOfInjection() {
-        double radians = Math.toRadians(injectionAB);
-        double area = (sideA * sideB * radians) / 2;
-        assertEquals(52.35987755982988, area, "Test injection not complete");
-        System.out.println("площадь по углу и двум сторонам определена верно");
-    }
-}
+    */
