@@ -1,6 +1,7 @@
 package lyashkov.triangle;
 
-import org.junit.jupiter.api.Assertions;
+import com.sun.istack.internal.NotNull;
+import static java.lang.Double.sum;
 
 
 public class Triangle {
@@ -11,12 +12,43 @@ public class Triangle {
     double injectionAB;
 
 
-    public Triangle(double sideA, double sideB, double sideC, double injectionAB) {
-        /*if (){
+    public Triangle(@NotNull double sideA, @NotNull double sideB, @NotNull double sideC, @NotNull double injectionAB) {
+        if (sideA >= 1) {
+            if (sideB >= 1) {
+                if (sideC >= 1) {
+                } else {
+                    throw new RuntimeException("сторона C не может равняться нулю или быть отрицательной");
+                }
+            } else {
+                throw new RuntimeException("сторона B не может равняться нулю или быть отрицательной");
+            }
+        }
+        else {
+            throw new RuntimeException("сторона A не может равняться нулю или быть отрицательной");
+        }
 
+        if(sum(sideA, sideB) > sideC) {
+            if(sum(sideC, sideB) > sideA) {
+                if(sum(sideC, sideA) > sideB) {
+                } else {
+                    throw new RuntimeException("сумма сторон треугольника не может быть больше третьей стороны");
+                }
+            } else {
+                throw new RuntimeException("сумма сторон треугольника не может быть больше третьей стороны");
+            }
         } else {
-            throw new RuntimeException(" не  верно");
-        }*/
+            throw new RuntimeException("сумма сторон треугольника не может быть больше третьей стороны");
+        }
+
+        if (injectionAB >= 1) {
+            if (injectionAB < 178) {
+            } else {
+                throw new RuntimeException("сумма углов не может превышать 180 градусов");
+            }
+        } else {
+            throw new RuntimeException("угол не может равняться нулю или быть отрицательным");
+        }
+
         this.sideA = sideA;
         this.sideB = sideB;
         this.sideC = sideC;
@@ -27,31 +59,12 @@ public class Triangle {
 
 
     public double getAreaOfInjection() {
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(true,sideA >= 1,"Не соответствует условиям A"),
-                () -> Assertions.assertEquals(true,sideB >= 1,"Не соответствует условиям B"),
-                () -> Assertions.assertEquals(true,injectionAB >= 1,"Не соответствует условиям поиска по углу"),
-                () -> Assertions.assertEquals(true, injectionAB < 178, "Сумма углов треугольника не может превышать 180 градусов")
-        );
             double radians = Math.toRadians(injectionAB);
             return (sideA * sideB * radians) / 2;
     }
 
     public double getAreaOfHeron() {
-        double sumOfAB = sideA + sideB;
-        double sumOfAC = sideA + sideC;
-        double sumOfBC = sideB + sideC;
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(true,sideA >=1,"Сторона A не может равняться нулю"),
-                () -> Assertions.assertEquals(true,sideB >=1,"Сторона B не может равняться нулю"),
-                () -> Assertions.assertEquals(true,sideC >=1,"Сторона C не может равняться нулю"),
-                () -> Assertions.assertEquals(true, sumOfAB > sideC, "Сумма сторон AB превышает длинну третьей стороны"),
-                () -> Assertions.assertEquals(true, sumOfAC > sideB, "Сумма сторон AC превышает длинну третьей стороны"),
-                () -> Assertions.assertEquals(true, sumOfBC > sideA, "Сумма сторон BC превышает длинну третьей стороны")
-        );
         double semiperiod = (sideA + sideB + sideC) / 2;
         return (Math.sqrt(semiperiod * (semiperiod - sideA) * (semiperiod - sideB) * (semiperiod - sideC)));
     }
-
-
 }
